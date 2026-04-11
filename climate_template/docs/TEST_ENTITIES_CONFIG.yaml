@@ -1,0 +1,249 @@
+# =============================================================================
+# Test Entities Configuration for Climate Template Integration
+# =============================================================================
+# Location: Add to /Users/alanlin/core/config/configuration.yaml
+#
+# This configuration creates all necessary test entities for comprehensive
+# testing of the Climate Template integration's new template support features.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Temperature Sensors
+# -----------------------------------------------------------------------------
+template:
+  - sensor:
+      # Room temperature sensor - main test sensor
+      - name: "Test Room Temperature"
+        unique_id: test_room_temperature
+        unit_of_measurement: "°C"
+        device_class: temperature
+        state_class: measurement
+        state: 21.5
+
+      # Outdoor temperature sensor - for multi-sensor templates
+      - name: "Test Outdoor Temperature"
+        unique_id: test_outdoor_temperature
+        unit_of_measurement: "°C"
+        device_class: temperature
+        state_class: measurement
+        state: -5.0
+
+      # Average temperature - template sensor example
+      - name: "Test Average Temperature"
+        unique_id: test_average_temperature
+        unit_of_measurement: "°C"
+        device_class: temperature
+        state_class: measurement
+        state: >
+          {% set room = states('sensor.test_room_temperature') | float(0) %}
+          {% set outdoor = states('sensor.test_outdoor_temperature') | float(0) %}
+          {{ ((room + outdoor) / 2) | round(1) }}
+
+      # Humidity sensor - for advanced features
+      - name: "Test Humidity"
+        unique_id: test_humidity
+        unit_of_measurement: "%"
+        device_class: humidity
+        state_class: measurement
+        state: 65
+
+# -----------------------------------------------------------------------------
+# Input Boolean - For Heater/Cooler/Fan Control
+# -----------------------------------------------------------------------------
+input_boolean:
+  test_heater:
+    name: Test Heater
+    icon: mdi:radiator
+    initial: false
+
+  test_ac:
+    name: Test AC
+    icon: mdi:air-conditioner
+    initial: false
+
+  test_fan:
+    name: Test Fan
+    icon: mdi:fan
+    initial: false
+
+# -----------------------------------------------------------------------------
+# Input Select - For Mode Testing
+# -----------------------------------------------------------------------------
+input_select:
+  test_hvac_mode:
+    name: Test HVAC Mode
+    options:
+      - "off"
+      - "heat"
+      - "cool"
+      - "auto"
+    initial: "off"
+    icon: mdi:thermostat
+
+  test_fan_mode:
+    name: Test Fan Mode
+    options:
+      - "auto"
+      - "low"
+      - "medium"
+      - "high"
+    initial: "auto"
+    icon: mdi:fan
+
+  test_preset_mode:
+    name: Test Preset Mode
+    options:
+      - "none"
+      - "eco"
+      - "comfort"
+      - "away"
+      - "boost"
+    initial: "none"
+    icon: mdi:home-thermometer
+
+# -----------------------------------------------------------------------------
+# Input Number - For Target Temperature
+# -----------------------------------------------------------------------------
+input_number:
+  test_target_temp:
+    name: Test Target Temperature
+    min: 7
+    max: 35
+    step: 0.5
+    unit_of_measurement: "°C"
+    icon: mdi:thermometer
+    mode: box
+    initial: 21
+
+# -----------------------------------------------------------------------------
+# Mock Climate Entity - For Template Reading Tests
+# -----------------------------------------------------------------------------
+# Note: This would typically be a real climate entity in production
+# For testing, we can create a template climate that reads from input helpers
+climate:
+  - platform: generic_thermostat
+    name: Test Real Thermostat
+    heater: input_boolean.test_heater
+    target_sensor: sensor.test_room_temperature
+    min_temp: 7
+    max_temp: 35
+    ac_mode: false
+    target_temp: 21
+    cold_tolerance: 0.3
+    hot_tolerance: 0.3
+    initial_hvac_mode: "off"
+
+# -----------------------------------------------------------------------------
+# Additional Helper Sensors for Advanced Testing
+# -----------------------------------------------------------------------------
+sensor:
+  # Simulate a faulty sensor that occasionally goes unavailable
+  - platform: template
+    sensors:
+      test_unreliable_temperature:
+        friendly_name: "Test Unreliable Temperature"
+        unit_of_measurement: "°C"
+        device_class: temperature
+        value_template: >
+          {% if now().minute % 10 == 0 %}
+            unavailable
+          {% else %}
+            {{ states('sensor.test_room_temperature') }}
+          {% endif %}
+
+# -----------------------------------------------------------------------------
+# Automation Scripts for Action Testing
+# -----------------------------------------------------------------------------
+# These scripts will be called by climate template actions
+automation:
+  - id: test_climate_set_temperature_action
+    alias: Test Climate Set Temperature Action
+    description: "Mock action for testing set_temperature template"
+    trigger: []
+    action:
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.test_target_temp
+        data:
+          value: "{{ temperature }}"
+    mode: single
+
+  - id: test_climate_set_hvac_mode_action
+    alias: Test Climate Set HVAC Mode Action
+    description: "Mock action for testing set_hvac_mode template"
+    trigger: []
+    action:
+      - service: input_select.select_option
+        target:
+          entity_id: input_select.test_hvac_mode
+        data:
+          option: "{{ hvac_mode }}"
+    mode: single
+
+  - id: test_climate_set_fan_mode_action
+    alias: Test Climate Set Fan Mode Action
+    description: "Mock action for testing set_fan_mode template"
+    trigger: []
+    action:
+      - service: input_select.select_option
+        target:
+          entity_id: input_select.test_fan_mode
+        data:
+          option: "{{ fan_mode }}"
+    mode: single
+
+  - id: test_climate_set_preset_mode_action
+    alias: Test Climate Set Preset Mode Action
+    description: "Mock action for testing set_preset_mode template"
+    trigger: []
+    action:
+      - service: input_select.select_option
+        target:
+          entity_id: input_select.test_preset_mode
+        data:
+          option: "{{ preset_mode }}"
+    mode: single
+
+# -----------------------------------------------------------------------------
+# Test Scenarios Configuration Examples
+# -----------------------------------------------------------------------------
+# These are example configurations to create via UI for different test scenarios
+
+# Scenario A: Simple Mode Climate
+# Name: Test Simple Climate
+# Temperature Sensor: sensor.test_room_temperature
+# Heater: input_boolean.test_heater
+# Cooler: input_boolean.test_ac
+# HVAC Modes: off, heat, cool
+# Min Temp: 7, Max Temp: 35, Step: 0.5
+
+# Scenario B: Advanced Mode with Templates
+# Name: Test Advanced Climate
+# Current Temperature Template: |
+#   {{ (states('sensor.test_room_temperature') | float +
+#       states('sensor.test_outdoor_temperature') | float) / 2 }}
+# HVAC Mode Template: |
+#   {{ states('input_select.test_hvac_mode') }}
+# Set Temperature Action: |
+#   - service: input_number.set_value
+#     target:
+#       entity_id: input_number.test_target_temp
+#     data:
+#       value: "{{ temperature }}"
+
+# Scenario C: Complex Template with Conditional Logic
+# Name: Test Complex Climate
+# Current Temperature Template: |
+#   {% if is_state('input_boolean.test_heater', 'on') %}
+#     {{ states('sensor.test_room_temperature') | float + 0.5 }}
+#   {% else %}
+#     {{ states('sensor.test_room_temperature') }}
+#   {% endif %}
+# HVAC Action Template: |
+#   {% if is_state('input_boolean.test_heater', 'on') %}
+#     heating
+#   {% elif is_state('input_boolean.test_ac', 'on') %}
+#     cooling
+#   {% else %}
+#     idle
+#   {% endif %}
