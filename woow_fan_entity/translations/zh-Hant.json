@@ -1,0 +1,127 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "WoowTech 風扇實體",
+        "description": "用實體選擇器與選填的動作腳本設定風扇實體。",
+        "data": {
+          "name": "名稱",
+          "switch_entity": "開關實體（開／關）",
+          "speed_count": "風速段數",
+          "preset_modes": "預設模式",
+          "enable_oscillation": "啟用擺頭",
+          "enable_direction": "啟用風向控制",
+          "percentage_entity": "風速百分比實體（接收）",
+          "percentage_receive_template": "百分比接收範本",
+          "percentage_input_min": "百分比輸入最小值",
+          "percentage_input_max": "百分比輸入最大值",
+          "percentage_output_min": "百分比輸出最小值",
+          "percentage_output_max": "百分比輸出最大值",
+          "preset_mode_entity": "預設模式實體（接收）",
+          "preset_mode_receive_template": "預設模式接收範本",
+          "oscillating_entity": "擺頭實體",
+          "direction_entity": "風向實體（接收）",
+          "direction_receive_template": "風向接收範本",
+          "set_percentage": "設定風速動作（送出）",
+          "set_preset_mode": "設定預設模式動作（送出）",
+          "set_oscillating": "設定擺頭動作（送出）",
+          "set_direction": "設定風向動作（送出）"
+        },
+        "data_description": {
+          "name": "這個風扇實體的顯示名稱。",
+          "switch_entity": "控制電源開關的實體（switch、input_boolean、fan）。",
+          "speed_count": "風速分幾段（例如低／中／高就填 3）。",
+          "preset_modes": "選填：預設模式，例如自動、睡眠、智慧。",
+          "enable_oscillation": "啟用擺頭開關控制。",
+          "enable_direction": "啟用風向控制（正轉／反轉）。",
+          "percentage_entity": "接收風速百分比的來源實體（input_number、number）。",
+          "percentage_receive_template": "選填：轉換接收到的百分比的 Jinja2 範本，用 {{ value }} 代表原始值。",
+          "percentage_input_min": "線性換算：輸入最小值（例如 ADC 範圍 0-1023 就填 0）。",
+          "percentage_input_max": "線性換算：輸入最大值（例如 ADC 範圍 0-1023 就填 1023）。",
+          "percentage_output_min": "線性換算：輸出最小值（例如風速百分比 0-100 就填 0）。",
+          "percentage_output_max": "線性換算：輸出最大值（例如風速百分比 0-100 就填 100）。",
+          "preset_mode_entity": "接收預設模式的來源實體（input_select、select）。",
+          "preset_mode_receive_template": "選填：轉換接收到的預設模式的 Jinja2 範本，用 {{ value }} 代表原始值。",
+          "oscillating_entity": "同步擺頭狀態的實體（switch、input_boolean）。",
+          "direction_entity": "接收風向的來源實體（input_select、select）。",
+          "direction_receive_template": "選填：轉換接收到的風向的 Jinja2 範本，用 {{ value }} 代表原始值。",
+          "set_percentage": "選填：改變風速百分比時改用這個動作腳本。",
+          "set_preset_mode": "選填：改變預設模式時改用這個動作腳本。",
+          "set_oscillating": "選填：改變擺頭時改用這個動作腳本。",
+          "set_direction": "選填：改變風向時改用這個動作腳本。"
+        }
+      }
+    },
+    "error": {
+      "unknown": "發生未預期的錯誤。"
+    },
+    "abort": {
+      "already_configured": "已經設定過了。"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "WoowTech 風扇實體選項",
+        "description": "修改風扇實體的設定。",
+        "data": {
+          "switch_entity": "開關實體（開／關）",
+          "speed_count": "風速段數",
+          "preset_modes": "預設模式",
+          "enable_oscillation": "啟用擺頭",
+          "enable_direction": "啟用風向控制",
+          "percentage_entity": "風速百分比實體（接收）",
+          "percentage_receive_template": "百分比接收範本",
+          "percentage_input_min": "百分比輸入最小值",
+          "percentage_input_max": "百分比輸入最大值",
+          "percentage_output_min": "百分比輸出最小值",
+          "percentage_output_max": "百分比輸出最大值",
+          "preset_mode_entity": "預設模式實體（接收）",
+          "preset_mode_receive_template": "預設模式接收範本",
+          "oscillating_entity": "擺頭實體",
+          "direction_entity": "風向實體（接收）",
+          "direction_receive_template": "風向接收範本",
+          "set_percentage": "設定風速動作（送出）",
+          "set_preset_mode": "設定預設模式動作（送出）",
+          "set_oscillating": "設定擺頭動作（送出）",
+          "set_direction": "設定風向動作（送出）"
+        },
+        "data_description": {
+          "switch_entity": "控制電源開關的實體。",
+          "speed_count": "風速分幾段。",
+          "preset_modes": "選填：預設模式，例如自動、睡眠。",
+          "enable_oscillation": "啟用擺頭控制。",
+          "enable_direction": "啟用風向控制。",
+          "percentage_entity": "接收風速百分比的來源實體。",
+          "percentage_receive_template": "選填：轉換接收到的百分比的 Jinja2 範本，用 {{ value }}。",
+          "percentage_input_min": "線性換算：輸入最小值。",
+          "percentage_input_max": "線性換算：輸入最大值。",
+          "percentage_output_min": "線性換算：輸出最小值。",
+          "percentage_output_max": "線性換算：輸出最大值。",
+          "preset_mode_entity": "接收預設模式的來源實體。",
+          "preset_mode_receive_template": "選填：轉換接收到的預設模式的 Jinja2 範本，用 {{ value }}。",
+          "oscillating_entity": "同步擺頭狀態的實體。",
+          "direction_entity": "接收風向的來源實體。",
+          "direction_receive_template": "選填：轉換接收到的風向的 Jinja2 範本，用 {{ value }}。",
+          "set_percentage": "選填：改變風速時改用這個動作腳本。",
+          "set_preset_mode": "選填：改變預設模式時改用這個動作腳本。",
+          "set_oscillating": "選填：改變擺頭時改用這個動作腳本。",
+          "set_direction": "選填：改變風向時改用這個動作腳本。"
+        }
+      }
+    }
+  },
+  "selector": {
+    "preset_modes": {
+      "options": {
+        "auto": "自動",
+        "sleep": "睡眠",
+        "smart": "智慧",
+        "natural": "自然風",
+        "breeze": "微風",
+        "silent": "靜音",
+        "turbo": "強力"
+      }
+    }
+  }
+}

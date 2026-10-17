@@ -1,0 +1,116 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "WoowTech 窗簾實體",
+        "description": "用實體選擇器與選填的動作腳本設定窗簾實體。",
+        "data": {
+          "name": "名稱",
+          "device_class": "裝置類別",
+          "enable_tilt": "啟用葉片角度控制",
+          "position_entity": "位置實體",
+          "tilt_position_entity": "葉片角度實體",
+          "open_time": "開啟時間",
+          "close_time": "關閉時間",
+          "tilt_open_time": "葉片開啟時間",
+          "tilt_close_time": "葉片關閉時間",
+          "set_position": "設定位置動作",
+          "set_tilt_position": "設定葉片角度動作",
+          "open_cover": "開啟動作",
+          "close_cover": "關閉動作",
+          "stop_cover": "停止動作",
+          "open_tilt": "葉片開啟動作",
+          "close_tilt": "葉片關閉動作",
+          "stop_tilt": "葉片停止動作"
+        },
+        "data_description": {
+          "name": "這個窗簾實體的顯示名稱。",
+          "device_class": "窗簾種類（百葉、捲簾、布簾等）。",
+          "enable_tilt": "啟用葉片（百葉）角度控制。",
+          "position_entity": "同步窗簾位置的實體（input_number、number），可雙向收送。",
+          "tilt_position_entity": "同步葉片角度的實體（input_number、number），可雙向收送。",
+          "open_time": "窗簾從全關到全開（0% 到 100%）需要的秒數；填了就會依時間推算位置。",
+          "close_time": "窗簾從全開到全關（100% 到 0%）需要的秒數；填了就會依時間推算位置。",
+          "tilt_open_time": "葉片完全打開需要的秒數，需先啟用葉片角度控制。",
+          "tilt_close_time": "葉片完全關上需要的秒數，需先啟用葉片角度控制。",
+          "set_position": "選填：改變位置時改用這個動作腳本。變數：{{ position }}",
+          "set_tilt_position": "選填：改變葉片角度時改用這個動作腳本。變數：{{ tilt_position }}",
+          "open_cover": "選填：開啟窗簾用的動作腳本。",
+          "close_cover": "選填：關閉窗簾用的動作腳本。",
+          "stop_cover": "選填：停止窗簾用的動作腳本。",
+          "open_tilt": "選填：打開葉片用的動作腳本。",
+          "close_tilt": "選填：關上葉片用的動作腳本。",
+          "stop_tilt": "選填：停止葉片轉動用的動作腳本。"
+        }
+      }
+    },
+    "error": {
+      "unknown": "發生未預期的錯誤。",
+      "time_pair_incomplete": "要依時間推算位置，開啟時間與關閉時間必須兩個都填。",
+      "tilt_time_pair_incomplete": "葉片開啟時間與葉片關閉時間必須兩個都填。"
+    },
+    "abort": {
+      "already_configured": "已經設定過了。"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "WoowTech 窗簾實體選項",
+        "description": "修改窗簾實體的設定。",
+        "data": {
+          "device_class": "裝置類別",
+          "enable_tilt": "啟用葉片角度控制",
+          "position_entity": "位置實體",
+          "tilt_position_entity": "葉片角度實體",
+          "open_time": "開啟時間",
+          "close_time": "關閉時間",
+          "tilt_open_time": "葉片開啟時間",
+          "tilt_close_time": "葉片關閉時間",
+          "set_position": "設定位置動作",
+          "set_tilt_position": "設定葉片角度動作",
+          "open_cover": "開啟動作",
+          "close_cover": "關閉動作",
+          "stop_cover": "停止動作",
+          "open_tilt": "葉片開啟動作",
+          "close_tilt": "葉片關閉動作",
+          "stop_tilt": "葉片停止動作"
+        },
+        "data_description": {
+          "device_class": "窗簾種類。",
+          "enable_tilt": "啟用葉片角度控制。",
+          "position_entity": "同步窗簾位置的實體。",
+          "tilt_position_entity": "同步葉片角度的實體。",
+          "open_time": "窗簾完全打開需要的秒數；填了就會依時間推算位置。",
+          "close_time": "窗簾完全關上需要的秒數；填了就會依時間推算位置。",
+          "tilt_open_time": "葉片完全打開需要的秒數。",
+          "tilt_close_time": "葉片完全關上需要的秒數。",
+          "set_position": "選填：改變位置時改用這個動作腳本。",
+          "set_tilt_position": "選填：改變葉片角度時改用這個動作腳本。",
+          "open_cover": "選填：開啟用的動作腳本。",
+          "close_cover": "選填：關閉用的動作腳本。",
+          "stop_cover": "選填：停止用的動作腳本。",
+          "open_tilt": "選填：打開葉片用的動作腳本。",
+          "close_tilt": "選填：關上葉片用的動作腳本。",
+          "stop_tilt": "選填：停止葉片用的動作腳本。"
+        }
+      }
+    }
+  },
+  "selector": {
+    "device_class": {
+      "options": {
+        "awning": "遮陽篷",
+        "blind": "百葉窗",
+        "curtain": "窗簾",
+        "damper": "風門",
+        "door": "門",
+        "garage": "車庫門",
+        "gate": "大門",
+        "shade": "捲簾",
+        "shutter": "鐵捲門",
+        "window": "窗戶"
+      }
+    }
+  }
+}
